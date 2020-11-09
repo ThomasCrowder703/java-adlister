@@ -3,11 +3,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "ViewProfileServlet", urlPatterns = "/profile")
+@WebServlet(name = "ViewProfileServlet", urlPatterns = "/profile") //sets up url to visit
 public class ViewProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/profile.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        String user = (String) session.getAttribute("user");
+        if(user == null) { //if user does not have a value
+            response.sendRedirect("/login"); //redirect to login page
+        }else{
+            request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response); //else show the profile page
+        }
+
+
     }
 }
