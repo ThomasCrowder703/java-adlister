@@ -17,6 +17,7 @@ public class CreateAdServlet extends HttpServlet {
         if(request.getSession().getAttribute("user") == null){
             response.sendRedirect("/login");
         }else{
+            request.setAttribute("today","thursday");
             request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request,response);
         }
     }
